@@ -1,0 +1,10 @@
+name: peacockframes
+markdown: kramdown
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-sitemap
+baseurl: ""
+url: http://dhanyacm.github.io/
+include: ["_pages"]
+permalink: /:title/
+permalink: /404.html
