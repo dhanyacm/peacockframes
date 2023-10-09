@@ -4,7 +4,7 @@ theme: jekyll-theme-cayman
 plugins:
   - jekyll-sitemap
 baseurl: ""
-url: http://dhanyacm.github.io/
+url: http://dhanyacm.github.io/peacockframes/
 include: ["_pages"]
 permalink: /:title/
 permalink: /404.html
