@@ -28,13 +28,10 @@ frontpage: false
             <a href="#"><img src="images/nature_small_1.jpg" alt="IMage" class="img-fluid"></a>
           </div>
 
- <ul id="fileList">
-        <!-- File names will be added here -->
+  <ul id="imageList">
+        <!-- Images and descriptions will be added here -->
     </ul>
-    
-                
-
-          
+  
         </div>
       </div>
     </div>
@@ -44,25 +41,32 @@ frontpage: false
         const githubUser = 'dhanyacm';
         const githubRepo = 'peacockframes';
         const folderPath = '/images';
+        const metadataFile = 'metadata.json';
 
-        // API URL to list contents of a directory in a GitHub repository
-        const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${folderPath}`;
+        // Function to fetch and display image information
+        async function fetchAndDisplayImageInformation() {
+            const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${folderPath}`;
+            const response = await fetch(apiUrl);
+            
+            if (response.ok) {
+                const imageData = await response.json();
+                const imageList = document.getElementById('imageList');
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const fileList = document.getElementById('fileList');
+                const metadataResponse = await fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${metadataFile}`);
+                const metadata = await metadataResponse.json();
 
-                data.forEach(fileInfo => {
-                    if (fileInfo.type === 'file') {
-                        const fileName = fileInfo.name;
+                imageData.forEach(imageInfo => {
+                    if (imageInfo.type === 'file' && imageInfo.name.endsWith('.jpg')) {
+                        const imageName = imageInfo.name;
+                        const imageDescription = metadata[imageName] || 'No description available';
                         const listItem = document.createElement('li');
-                        listItem.textContent = fileName;
-                        fileList.appendChild(listItem);
+                        listItem.innerHTML = `<img src="${imageInfo.download_url}" alt="${imageName}" width="300"><p><strong>${imageName}</strong>: ${imageDescription}</p>`;
+                        imageList.appendChild(listItem);
                     }
                 });
-            })
-            .catch(error => {
-                console.error('Failed to fetch data:', error);
-            });
+            }
+        }
+
+        // Start the process
+        fetchAndDisplayImageInformation();
     </script>
