@@ -37,36 +37,36 @@ frontpage: false
     </div>
 
 <script>
-        // Replace these with your GitHub repository information
-        const githubUser = 'dhanyacm';
-        const githubRepo = 'peacockframes';
-        const folderPath = '/images';
-        const metadataFile = '/metadata.json';
+    // Replace these with your GitHub repository information
+    const githubUser = 'dhanyacm';
+    const githubRepo = 'peacockframes';
+    const folderPath = '/images';
+    const metadataFile = '/metadata.json'; // Updated metadataFile path
 
-        // Function to fetch and display image information
-        async function fetchAndDisplayImageInformation() {
-            const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${folderPath}`;
-            const response = await fetch(apiUrl);
-            
-            if (response.ok) {
-                const imageData = await response.json();
-                const imageList = document.getElementById('imageList');
+    // Function to fetch and display image information
+    async function fetchAndDisplayImageInformation() {
+        const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents${folderPath}`;
+        const response = await fetch(apiUrl);
 
-                const metadataResponse = await fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${metadataFile}`);
-                const metadata = await metadataResponse.json();
+        if (response.ok) {
+            const imageData = await response.json();
+            const imageList = document.getElementById('imageList');
 
-                imageData.forEach(imageInfo => {
-                    if (imageInfo.type === 'file' && imageInfo.name.endsWith('.jpg')) {
-                        const imageName = imageInfo.name;
-                        const imageDescription = metadata[imageName] || 'No description available';
-                        const listItem = document.createElement('li');
-                        listItem.innerHTML = `<img src="${imageInfo.download_url}" alt="${imageName}" width="300"><p><strong>${imageName}</strong>: ${imageDescription}</p>`;
-                        imageList.appendChild(listItem);
-                    }
-                });
-            }
+            const metadataResponse = await fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main${metadataFile}`);
+            const metadata = await metadataResponse.json();
+
+            imageData.forEach(imageInfo => {
+                if (imageInfo.type === 'file' && imageInfo.name.endsWith('.jpg')) {
+                    const imageName = imageInfo.name;
+                    const imageDescription = metadata[imageName] || 'No description available';
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<img src="${imageInfo.download_url}" alt="${imageName}" width="300"><p><strong>${imageName}</strong>: ${imageDescription}</p>`;
+                    imageList.appendChild(listItem);
+                }
+            });
         }
+    }
 
-        // Start the process
-        fetchAndDisplayImageInformation();
-    </script>
+    // Start the process
+    fetchAndDisplayImageInformation();
+</script>
