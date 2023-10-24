@@ -34,7 +34,7 @@ frontpage: false
     const githubUser = 'dhanyacm';
     const githubRepo = 'peacockframes';
     const folderPath = '/images';
-    const metadataFile = '/images/metadata.json'; // Updated metadataFile path
+    const metadataFile = 'metadata.json'; // Updated metadataFile path
 
     // Function to fetch and display image information
     async function fetchAndDisplayImageInformation() {
@@ -45,7 +45,7 @@ frontpage: false
             const imageData = await response.json();
             const imageList = document.getElementById('imageList');
 
-            const metadataResponse = await fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main${metadataFile}`);
+            const metadataResponse = await fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main${folderPath}/${metadataFile}`);
             const metadata = await metadataResponse.json();
 
             imageData.forEach(imageInfo => {
