@@ -29,7 +29,33 @@ frontpage: false
   const githubUser = 'dhanyacm';
   const githubRepo = 'peacockframes';
   const folderPath = '/images';
-  const metadataFile = 'metadata.json'; // Updated metadataFile path
+
+
+  //old script without metadata
+     // API URL to list contents of a directory in a GitHub repository
+        const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${folderPath}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const fileList = document.getElementById('fileList');
+
+                data.forEach(fileInfo => {
+                    if (fileInfo.type === 'file') {
+                        const fileName = fileInfo.name;
+                        const listItem = document.createElement('li');
+                        listItem.textContent = fileName;
+                        fileList.appendChild(listItem);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch data:', error);
+            });
+
+
+  //new script with metadata
+  /* const metadataFile = 'metadata.json'; // Updated metadataFile path
 
   // Function to fetch and display image information
   async function fetchAndDisplayImageInformation() {
@@ -64,5 +90,5 @@ frontpage: false
   }
 
   // Start the process
-  fetchAndDisplayImageInformation();
+  fetchAndDisplayImageInformation(); */
 </script>
