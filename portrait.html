@@ -18,79 +18,53 @@ frontpage: false
       </div>
     </div>
 
-
-     <ul id="fileList">
-   <!--  <ul id="imageList">
-      Images and descriptions will be added here -->
+    <ul id="imageList">
+       <!-- Images and descriptions will be added here -->
     </ul>
   </div>
 </div>
+
+<!-- HTML part remains the same -->
 
 <script>
   // Replace these with your GitHub repository information
   const githubUser = 'dhanyacm';
   const githubRepo = 'peacockframes';
   const folderPath = '/images';
-
-
-  //old script without metadata
-     // API URL to list contents of a directory in a GitHub repository
-        const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${folderPath}`;
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const fileList = document.getElementById('fileList');
-
-                data.forEach(fileInfo => {
-                    if (fileInfo.type === 'file') {
-                        const fileName = fileInfo.name;
-                        const listItem = document.createElement('li');
-                        listItem.textContent = fileName;
-                        fileList.appendChild(listItem);
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Failed to fetch data:', error);
-            });
-
-
-  //new script with metadata
-  /* const metadataFile = 'metadata.json'; // Updated metadataFile path
+  const metadataFile = 'metadata.json'; // Updated metadataFile path
 
   // Function to fetch and display image information
   async function fetchAndDisplayImageInformation() {
     try {
-      const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents${folderPath}`;
-      const response = await fetch(apiUrl);
+      // Fetch both image data and metadata simultaneously
+      const [imageResponse, metadataResponse] = await Promise.all([
+        fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/contents${folderPath}`),
+        fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main${folderPath}/${metadataFile}`)
+      ]);
 
-      if (response.ok) {
-        const imageData = await response.json();
-        const imageList = document.getElementById('imageList');
-
-        const metadataResponse = await fetch(
-          `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main${folderPath}/${metadataFile}`
-        );
-        const metadata = await metadataResponse.json();
-
-        imageData.forEach((imageInfo) => {
-          if (imageInfo.type === 'file' && imageInfo.name.endsWith('.jpg')) {
-            const imageName = imageInfo.name;
-            const imageDescription = metadata[imageName] || 'No description available';
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `<img src="${imageInfo.download_url}" alt="${imageName}" width="300"><p><strong>${imageName}</strong>: ${imageDescription}</p>`;
-            imageList.appendChild(listItem);
-          }
-        });
-      } else {
-        console.error('Failed to fetch image data:', response.statusText);
+      if (!imageResponse.ok) {
+        throw new Error(`Failed to fetch image data: ${imageResponse.statusText}`);
       }
+
+      const imageData = await imageResponse.json();
+      const imageList = document.getElementById('fileList'); // Change this to your actual list ID
+
+      const metadata = await metadataResponse.json();
+
+      imageData.forEach((imageInfo) => {
+        if (imageInfo.type === 'file' && imageInfo.name.endsWith('.jpg')) {
+          const imageName = imageInfo.name;
+          const imageDescription = metadata[imageName] || 'No description available';
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `<img src="${imageInfo.download_url}" alt="${imageName}" width="300"><p><strong>${imageName}</strong>: ${imageDescription}</p>`;
+          imageList.appendChild(listItem);
+        }
+      });
     } catch (error) {
       console.error('Error during fetchAndDisplayImageInformation:', error);
     }
   }
 
   // Start the process
-  fetchAndDisplayImageInformation(); */
+  fetchAndDisplayImageInformation();
 </script>
