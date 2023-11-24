@@ -1243,3 +1243,14 @@ img {
     filter: none;
     -webkit-filter: grayscale(0);
     -webkit-transform: scale(1.01); }
+
+//parallax effect
+ .parallax-container {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-attachment: fixed; /* Parallax effect */
+            margin-bottom: 30px;
+        }
