@@ -41,6 +41,7 @@ frontpage: false
         fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/contents${folderPath}`),
         fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/contents/${metadataFile}`)
         /*fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${metadataFile}`)*/
+ 
       ]);
 
       if (!imageResponse.ok) {
@@ -51,6 +52,9 @@ frontpage: false
       const imageList = document.getElementById('imageList'); // Change this to your actual list ID
 
       const metadata = await metadataResponse.json();
+
+      console.log('Image Data:', imageData);
+      console.log('Metadata:', metadata);
 
       imageData.forEach((imageInfo) => {
         if (imageInfo.type === 'file' && imageInfo.name.endsWith('.jpg')) {
