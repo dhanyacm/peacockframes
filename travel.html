@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Image Display</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .parallax-container {
+            position: relative;
+            height: 400px; /* Adjust the height as needed */
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .parallax-image {
+            width: 100%;
+            height: auto;
+            transform: translateZ(-1px) scale(1.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Your existing text content goes here -->
+
+    <!-- Parting Picture with Parallax Effect -->
+    <div class="parallax-container">
+        <img src="images/img_2.jpg" alt="Creative Image" class="parallax-image">
+    </div>
+</div>
+
+</body>
+</html>
