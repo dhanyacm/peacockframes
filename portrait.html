@@ -39,8 +39,8 @@ frontpage: false
       // Fetch both image data and metadata simultaneously
       const [imageResponse, metadataResponse] = await Promise.all([
         fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/contents${folderPath}`),
-        fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/contents${folderPath}/${metadataFile}`)
-        /*fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main${folderPath}/${metadataFile}`)*/
+        fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/contents/${metadataFile}`)
+        /*fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${metadataFile}`)*/
       ]);
 
       if (!imageResponse.ok) {
