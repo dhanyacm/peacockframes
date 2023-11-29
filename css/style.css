@@ -1246,11 +1246,7 @@ img {
 
 //parallax effect
  .parallax-container {
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-attachment: fixed; /* Parallax effect */
-            margin-bottom: 30px;
+      background: url(../images/img_2.jpg) no-repeat 0px 0px;
+	    background-size:cover;
+    	background-attachment:fixed;
         }
