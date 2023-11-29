@@ -1243,10 +1243,3 @@ img {
     filter: none;
     -webkit-filter: grayscale(0);
     -webkit-transform: scale(1.01); }
-
-//parallax effect
- .parallax-container {
-      background: url(../images/img_2.jpg) no-repeat 0px 0px;
-	    background-size:cover;
-    	background-attachment:fixed;
-        }
