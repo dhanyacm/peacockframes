@@ -1,44 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Image Display</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .parallax-container {
-            position: relative;
-            height: 400px; /* Adjust the height as needed */
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        .parallax-image {
-            width: 100%;
-            height: auto;
-            transform: translateZ(-1px) scale(1.5);
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <!-- Your existing text content goes here -->
-
-    <!-- Parting Picture with Parallax Effect -->
-    <div class="parallax-container">
-        <img src="images/img_2.jpg" alt="Creative Image" class="parallax-image">
+---
+layout: default
+description: PeacockFrames Site Travel Page
+title: Travel
+id: travel
+frontpage: false
+---
+<div class="site-section" data-aos="fade">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-7">
+        <div class="row mb-5">
+          <div class="col-12">
+            <h2 class="site-section-heading text-center">Travel Gallery</h2>
+          </div>
+        </div>
+      </div>
     </div>
+
+ <ul id="fileList">
+        <!-- File names will be added here -->
+    </ul>
+      
+  </div>
 </div>
 
-</body>
-</html>
+<script>
+        // Replace these with your GitHub repository information
+        const githubUser = 'dhanyacm';
+        const githubRepo = 'peacockframes';
+        const folderPath = '/images';
+
+        // API URL to list contents of a directory in a GitHub repository
+        const apiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${folderPath}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const fileList = document.getElementById('fileList');
+
+                data.forEach(fileInfo => {
+                    if (fileInfo.type === 'file') {
+                        const fileName = fileInfo.name;
+                        const listItem = document.createElement('li');
+                        listItem.textContent = fileName;
+                        fileList.appendChild(listItem);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch data:', error);
+            });
+    </script>
