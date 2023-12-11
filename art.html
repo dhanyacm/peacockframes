@@ -1,53 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Gallery</title>
-  <!-- Include lightgallery and its dependencies -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js"></script>
+    <!-- Your head content here -->
 </head>
 <body>
 
 <div class="row" id="lightgallery"></div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.10.0/js/lightgallery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.10.0/js/lg-thumbnail.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.10.0/js/lg-fullscreen.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.10.0/js/lg-zoom.min.js"></script>
+<script src="imageData.json"></script>
+
 <script>
-  // Replace 'images' with the path to your image directory
-  const imageDirectory = 'images';
+    $(document).ready(function() {
+        generateGallery(imageData);
 
-  // Function to fetch images and display them using lightbox
-  async function fetchAndDisplayImages() {
-    try {
-      const response = await fetch(imageDirectory);
-      const imageList = await response.json();
+        // Initialize lightGallery
+        $('#lightgallery').lightGallery({
+            thumbnail: true,
+            animateThumb: false,
+            showThumbByDefault: false,
+            download: false,
+        });
+    });
 
-      const lightGallery = $('#lightgallery');
-
-      imageList.forEach((image, index) => {
-        const item = $('<div>').addClass('col-sm-6 col-md-4 col-lg-3 col-xl-3 item');
-        item.attr('data-aos', 'fade');
-        item.attr('data-src', `${imageDirectory}/${image}`);
-        item.attr('data-sub-html', `<h4>Image ${index + 1}</h4><p>Description for Image ${index + 1}</p>`);
-
-        const anchor = $('<a>').attr('href', `#${image}`);
-        const img = $('<img>').attr('src', `${imageDirectory}/${image}`).attr('alt', `Image ${index + 1}`).addClass('img-fluid');
-
-        anchor.append(img);
-        item.append(anchor);
-        lightGallery.append(item);
-      });
-
-      // Initialize lightgallery after dynamically adding items
-      lightGallery.lightGallery();
-    } catch (error) {
-      console.error('Error during fetchAndDisplayImages:', error);
+    // Function to dynamically generate HTML for the image gallery
+    function generateGallery(imageData) {
+        var galleryHtml = '';
+        for (var i = 0; i < imageData.length; i++) {
+            galleryHtml += '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 item" data-aos="fade" data-src="' + imageData[i].src + '" data-sub-html="<h4>Fading Light</h4><p>' + imageData[i].description + '</p>">';
+            galleryHtml += '<a href="#"><img src="' + imageData[i].thumb + '" alt="Image" class="img-fluid"></a>';
+            galleryHtml += '</div>';
+        }
+        document.getElementById('lightgallery').innerHTML = galleryHtml;
     }
-  }
-
-  // Start the process
-  fetchAndDisplayImages();
 </script>
 
 </body>
