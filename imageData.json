@@ -1,0 +1,5 @@
+[
+  {"src": "images/big-images/nature_big_1.jpg", "thumb": "images/nature_small_1.jpg", "description": "Your description here"},
+  {"src": "images/big-images/nature_big_2.jpg", "thumb": "images/nature_small_2.jpg", "description": "Your description here"},
+  // Add more entries for each image
+]
